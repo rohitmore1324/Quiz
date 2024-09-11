@@ -3,12 +3,16 @@ import { useState } from "react";
 import { auth, db } from "./firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [fname, setFname] = useState("");
     const [lname, setLname] = useState("");
+    const [role, setRole] = useState("user");
+
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -20,12 +24,13 @@ function Register() {
                     email: user.email,
                     firstName: fname,
                     lastName: lname,
-                    photo: "",
+                    role: role,
                 });
             }
-            console.log("User Registered Successfully!!");
-            toast.success("User Registered Successfully!!", {
+            toast.success("User Registered Successfully!", {
                 position: "top-center",
+                autoClose: 2000, // Automatically close after 2 seconds
+                onClose: () => navigate("/login"), // Redirect to login after toast is closed
             });
         } catch (error) {
             console.log(error.message);
@@ -84,6 +89,19 @@ function Register() {
                 </div>
 
                 <div className="mb-4">
+                    <label className="block text-gray-700">Role</label>
+                    <select
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-100"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        required
+                    >
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <div className="mb-4">
                     <button
                         type="submit"
                         className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300"
@@ -104,3 +122,4 @@ function Register() {
 }
 
 export default Register;
+

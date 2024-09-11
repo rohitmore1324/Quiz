@@ -5,7 +5,8 @@ import Main from './component/Main';
 import Login from './component/Login';
 import Register from './component/Register';
 import Profile from './component/Profile';
-
+import { ToastContainer } from 'react-toastify'; // Import ToastContainer
+import 'react-toastify/dist/ReactToastify.css';  // Import Toastify CSS
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/sign-up" element={<SignUp />} />
       </Routes>
+      <ToastContainer /> {/* Add the ToastContainer here */}
     </Router>
   );
 }
