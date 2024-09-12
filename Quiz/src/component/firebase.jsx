@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider } from "firebase/auth"
+import { getAuth, GoogleAuthProvider, setPersistence, browserLocalPersistence } from "firebase/auth";
+
 const firebaseConfig = {
     apiKey: "AIzaSyAArmozksjcFyn9uqEvfO3miPNGSqp8ogo",
     authDomain: "quiz1-8be7e.firebaseapp.com",
@@ -15,8 +16,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+// Set persistence
+setPersistence(auth, browserLocalPersistence)
+    .catch((error) => {
+        console.error("Error setting auth persistence:", error);
+    });
+
 export { auth, provider };
 export const db = getFirestore(app);
-
-
-
