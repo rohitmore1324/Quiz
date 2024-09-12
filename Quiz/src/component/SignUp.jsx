@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { auth, provider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
-import Main from "./Main"
 import { useNavigate } from "react-router-dom";
+import UserPage from './UserPage';
+
+
 function SignUp() {
   const navigate = useNavigate()
   const [value, setValue] = useState('')
@@ -12,7 +14,7 @@ function SignUp() {
       setValue(data.user.email)
       localStorage.setItem("email", data.user.email)
       if (data.user.email) {
-        navigate('/home')
+        navigate('/user-pages')
       }
     })
   }
@@ -24,7 +26,7 @@ function SignUp() {
     console.log('got value', email);
 
     if (email) {
-      navigate('/home')
+      navigate('/user-pages')
     }
   }, [])
 
@@ -33,10 +35,12 @@ function SignUp() {
 
   return (
     <div>
-      {value ? <Main /> :
+      {value ? <UserPage /> :
         <button onClick={handleClick} className="border-solid py-1 px-3 focus:scale-95 duration-200 transition-all bg-green-600 shadow-sm rounded-md">Sign With Google</button>}
     </div>
   )
 }
 
 export default SignUp
+
+

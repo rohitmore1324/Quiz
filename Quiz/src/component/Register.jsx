@@ -10,7 +10,6 @@ function Register() {
     const [password, setPassword] = useState("");
     const [fname, setFname] = useState("");
     const [lname, setLname] = useState("");
-    const [role, setRole] = useState("user");
 
     const navigate = useNavigate(); // Initialize useNavigate hook
 
@@ -20,11 +19,12 @@ function Register() {
             await createUserWithEmailAndPassword(auth, email, password);
             const user = auth.currentUser;
             if (user) {
+                // Adding role field with default value as 'user'
                 await setDoc(doc(db, "Users", user.uid), {
                     email: user.email,
                     firstName: fname,
                     lastName: lname,
-                    role: role,
+                    role: "user" // Default role set as 'user'
                 });
             }
             toast.success("User Registered Successfully!", {
@@ -87,20 +87,6 @@ function Register() {
                         required
                     />
                 </div>
-
-                <div className="mb-4">
-                    <label className="block text-gray-700">Role</label>
-                    <select
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-100"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                        required
-                    >
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-
                 <div className="mb-4">
                     <button
                         type="submit"
@@ -122,4 +108,3 @@ function Register() {
 }
 
 export default Register;
-
