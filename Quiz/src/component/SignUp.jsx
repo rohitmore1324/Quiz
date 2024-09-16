@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { auth, provider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import UserPage from './UserPage';
+import UserPage from "../user_panel/UserPage";
+
 
 
 function SignUp() {

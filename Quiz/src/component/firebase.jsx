@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getStorage } from 'firebase/storage';
+
+
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyAArmozksjcFyn9uqEvfO3miPNGSqp8ogo",
@@ -15,6 +19,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const storage = getStorage();
 const provider = new GoogleAuthProvider();
 
 // Set persistence
@@ -23,5 +28,5 @@ setPersistence(auth, browserLocalPersistence)
         console.error("Error setting auth persistence:", error);
     });
 
-export { auth, provider };
+export { auth, provider, storage };
 export const db = getFirestore(app);
